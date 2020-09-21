@@ -76,4 +76,3 @@ public class ImageRequester {
         return screenBytes * 3;
     }
 }
-
