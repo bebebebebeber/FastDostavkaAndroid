@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.smarthome.Network.ImageRequester;
+import com.example.smarthome.constants.Urls;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         imageRequester = ImageRequester.getInstance();
         editImage =findViewById(R.id.photo);
         NetworkImageView nv = (NetworkImageView) findViewById(R.id.photo);
-        imageRequester.setImageFromUrl(editImage, "http://10.0.2.2/Images/div4una.jpg");
+        imageRequester.setImageFromUrl(editImage, Urls.BASE_URL+"Images/div4una.jpg");
 
     }
 }
