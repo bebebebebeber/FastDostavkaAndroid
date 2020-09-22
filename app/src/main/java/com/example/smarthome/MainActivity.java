@@ -2,7 +2,9 @@ package com.example.smarthome;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -22,5 +24,9 @@ public class MainActivity extends AppCompatActivity {
         NetworkImageView nv = (NetworkImageView) findViewById(R.id.photo);
         imageRequester.setImageFromUrl(editImage, Urls.BASE_URL+"Images/div4una.jpg");
 
+    }
+    public void click(View view){
+        Intent intent = new Intent(this, MenuSideBarActivity.class);
+        startActivity(intent);
     }
 }
