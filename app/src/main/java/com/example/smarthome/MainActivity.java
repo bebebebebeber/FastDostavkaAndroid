@@ -2,12 +2,17 @@ package com.example.smarthome;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
+import androidx.biometric.BiometricPrompt.PromptInfo;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.hardware.biometrics.BiometricPrompt;
-import android.hardware.fingerprint.FingerprintManager;
+//import android.hardware.biometrics.BiometricPrompt;
+//import android.hardware.biometrics.BiometricPrompt.PromptInfo;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +38,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.concurrent.Executor;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,6 +51,7 @@ public class MainActivity extends BaseActivity {
     private Button loginButton;
     private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
+    private BiometricPrompt.PromptInfo promptInfo;
 
     public void saveJWTToken(String token) {
         SharedPreferences prefs;
@@ -86,6 +94,40 @@ public class MainActivity extends BaseActivity {
                                   }
         );
 
+//        BiometricManager biometricManager = BiometricManager.from(this);
+////        int t = biometricManager.canAuthenticate();
+        BiometricPrompt.PromptInfo promptI = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Identify yourself")
+                .setSubtitle("Log in using your biometric credential")
+                .setDeviceCredentialAllowed(true)
+                // Can't call setNegativeButtonText() and
+                // setAllowedAuthenticators(...|DEVICE_CREDENTIAL) at the same time.
+                // .setNegativeButtonText("Use account password")
+                .build();
+        Executor executor = ContextCompat.getMainExecutor(this);
+        BiometricPrompt bp = new BiometricPrompt(this, executor, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                Toast.makeText(getApplicationContext(),
+                        "Authentication error", Toast.LENGTH_SHORT)
+                        .show();
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                Toast.makeText(getApplicationContext(),
+                        "Authentication succeeded!", Toast.LENGTH_SHORT)
+                        .show();
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                Toast.makeText(getApplicationContext(), "Authentication failed",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
+        bp.authenticate(promptI);
 
     }
 
