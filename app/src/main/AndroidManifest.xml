@@ -16,9 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".MenuActivity"
+            android:label="@string/title_activity_menu"></activity>
+        <activity
             android:name=".MenuSideBarActivity"
             android:label="@string/title_activity_menu_side_bar"
-            android:theme="@style/NoActionBar"></activity>
+            android:theme="@style/NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

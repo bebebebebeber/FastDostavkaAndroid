@@ -26,6 +26,7 @@ import com.example.smarthome.Network.ImageRequester;
 import com.example.smarthome.Network.Login;
 import com.example.smarthome.Network.NetworkService;
 import com.example.smarthome.Network.Tokens;
+import com.example.smarthome.application.HomeApplication;
 import com.example.smarthome.constants.Urls;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -71,6 +72,39 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if(getToken().getRefreshToken()!=""&&getToken().getRefreshToken()!=null){
+            BiometricPrompt.PromptInfo promptI = new BiometricPrompt.PromptInfo.Builder()
+                    .setTitle("Підтверження входу в додаток")
+                    .setSubtitle("Підтвердіть ваші біометричні дані")
+                    .setDeviceCredentialAllowed(true)
+                    // Can't call setNegativeButtonText() and
+                    // setAllowedAuthenticators(...|DEVICE_CREDENTIAL) at the same time.
+                    // .setNegativeButtonText("Use account password")
+                    .build();
+            Executor executor = ContextCompat.getMainExecutor(this);
+            BiometricPrompt bp = new BiometricPrompt(this, executor, new BiometricPrompt.AuthenticationCallback() {
+                @Override
+                public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+//                    Toast.makeText(HomeApplication.getAppContext(),
+//                            "Authentication error", Toast.LENGTH_SHORT)
+//                            .show();
+                }
+
+                @Override
+                public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                    Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onAuthenticationFailed() {
+//                    Toast.makeText(HomeApplication.getAppContext(), "Authentication failed",
+//                            Toast.LENGTH_SHORT)
+//                            .show();
+                }
+            });
+            bp.authenticate(promptI);
+        }
         loginButton = (Button) findViewById(R.id.button);
         //imageRequester = ImageRequester.getInstance();
         //editImage =findViewById(R.id.photo);
@@ -122,17 +156,16 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onResponse(@NonNull Call<Tokens> call, @NonNull Response<Tokens> response) {
 
-                        //textView.append(post.getId() + "\n");
-                        //textView.append(post.getUserId() + "\n");
-                        //textView.append(post.getTitle() + "\n");
-                        //textView.append(post.getBody() + "\n");
+
                         if (response.errorBody() == null && response.isSuccessful()) {
                             passwordLayout.setError("");
                             //loginButton.setError("");
                             Tokens post = response.body();
-                            Toast toast = Toast.makeText(getApplicationContext(), "All done! your ref token :" + post.getRefreshToken(), Toast.LENGTH_LONG);
-                            toast.show();
-                            saveJWTToken(post.getToken());
+                           // Toast toast = Toast.makeText(getApplicationContext(), "All done! your ref token :" + post.getRefreshToken(), Toast.LENGTH_LONG);
+                            //toast.show();
+                            saveJWTToken(post.getToken(),post.getRefreshToken());
+                            Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                            startActivity(intent);
                         } else {
                             //emailLayout.setError("");
                             //password.setError("Login or password was wrong");

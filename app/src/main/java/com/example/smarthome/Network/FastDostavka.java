@@ -7,6 +7,8 @@ import retrofit2.http.POST;
 public interface FastDostavka {
     @POST("/api/auth/login")
     public Call<Tokens> login(@Body Login m);
+    @POST("/api/auth/refresh")
+    public Call<Tokens> refresh(@Body Refresh m);
 //    @GET("/posts")
 //    public Call<List<Post>> getAllPosts();
 }
