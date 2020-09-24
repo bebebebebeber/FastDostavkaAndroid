@@ -96,38 +96,7 @@ public class MainActivity extends BaseActivity {
 
 //        BiometricManager biometricManager = BiometricManager.from(this);
 ////        int t = biometricManager.canAuthenticate();
-        BiometricPrompt.PromptInfo promptI = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Identify yourself")
-                .setSubtitle("Log in using your biometric credential")
-                .setDeviceCredentialAllowed(true)
-                // Can't call setNegativeButtonText() and
-                // setAllowedAuthenticators(...|DEVICE_CREDENTIAL) at the same time.
-                // .setNegativeButtonText("Use account password")
-                .build();
-        Executor executor = ContextCompat.getMainExecutor(this);
-        BiometricPrompt bp = new BiometricPrompt(this, executor, new BiometricPrompt.AuthenticationCallback() {
-            @Override
-            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
-                Toast.makeText(getApplicationContext(),
-                        "Authentication error", Toast.LENGTH_SHORT)
-                        .show();
-            }
 
-            @Override
-            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
-                Toast.makeText(getApplicationContext(),
-                        "Authentication succeeded!", Toast.LENGTH_SHORT)
-                        .show();
-            }
-
-            @Override
-            public void onAuthenticationFailed() {
-                Toast.makeText(getApplicationContext(), "Authentication failed",
-                        Toast.LENGTH_SHORT)
-                        .show();
-            }
-        });
-        bp.authenticate(promptI);
 
     }
 
