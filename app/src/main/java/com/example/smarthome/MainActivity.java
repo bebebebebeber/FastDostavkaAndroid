@@ -26,6 +26,7 @@ import com.example.smarthome.Network.ImageRequester;
 import com.example.smarthome.Network.Login;
 import com.example.smarthome.Network.NetworkService;
 import com.example.smarthome.Network.Tokens;
+import com.example.smarthome.Network.utils.CommonUtils;
 import com.example.smarthome.application.HomeApplication;
 import com.example.smarthome.constants.Urls;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -135,6 +136,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void click(View view) {
+        CommonUtils.showLoading(this);
         final TextInputEditText password = findViewById(R.id.password);
         final TextInputEditText email = findViewById(R.id.email);
         final TextInputLayout passwordLayout = findViewById(R.id.passwordLayout);
@@ -164,11 +166,13 @@ public class MainActivity extends BaseActivity {
                            // Toast toast = Toast.makeText(getApplicationContext(), "All done! your ref token :" + post.getRefreshToken(), Toast.LENGTH_LONG);
                             //toast.show();
                             saveJWTToken(post.getToken(),post.getRefreshToken());
+                            CommonUtils.hideLoading();
                             Intent intent = new Intent(MainActivity.this, MenuActivity.class);
                             startActivity(intent);
                         } else {
                             //emailLayout.setError("");
                             //password.setError("Login or password was wrong");
+                            CommonUtils.hideLoading();
                             passwordLayout.setError("Login or password was wrong");
                             loginButton.setError("Login or password was wrong");
                         }
@@ -178,6 +182,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onFailure(@NonNull Call<Tokens> call, @NonNull Throwable t) {
 
+                        CommonUtils.hideLoading();
                         //textView.append("Error occurred while getting request!");
                         t.printStackTrace();
                     }

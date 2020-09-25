@@ -10,11 +10,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.smarthome.Network.Tokens;
+import com.example.smarthome.account.JwtServiceHolder;
 import com.example.smarthome.application.HomeApplication;
 import com.example.smarthome.fragments.ErrorFragment;
 
 
-public abstract class BaseActivity extends AppCompatActivity  {
+public abstract class BaseActivity extends AppCompatActivity   implements
+        JwtServiceHolder {
 
     protected Fragment currentFragment;
     private Fragment lastPageFragment;
@@ -36,6 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity  {
 
         transaction.commit();
     }
+    @Override
     public void saveJWTToken(String token,String refreshToken) {
         SharedPreferences prefs;
         SharedPreferences.Editor edit;
@@ -53,6 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity  {
             e.printStackTrace();
         }
     }
+    @Override
     public Tokens getToken() {
         SharedPreferences prefs=this.getSharedPreferences("jwtStore", Context.MODE_PRIVATE);
         String token = prefs.getString("token","");
@@ -60,7 +64,7 @@ public abstract class BaseActivity extends AppCompatActivity  {
 
         return new Tokens(token,refreshToken);
     }
-
+    @Override
     public void removeToken() {
         SharedPreferences prefs;
         SharedPreferences.Editor edit;

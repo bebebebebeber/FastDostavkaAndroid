@@ -38,7 +38,29 @@ public class AuthorizationInterceptor implements Interceptor {
             HomeApplication context = (HomeApplication) HomeApplication.getAppContext();
             BaseActivity a = (BaseActivity) context.getCurrentActivity();
             final BaseActivity act = (BaseActivity) context.getCurrentActivity();
+            NetworkService.getInstance()
+                    .getJSONApi()
+                    .refresh(new Refresh(a.getToken().getToken(),a.getToken().getRefreshToken()))
+                    .enqueue(new Callback<Tokens>() {
+                        @Override
+                        public void onResponse(@NonNull Call<Tokens> call, @NonNull retrofit2.Response<Tokens> response) {
+                            if (response.errorBody() == null && response.isSuccessful()) {
+                                Tokens post = response.body();
+                                act.saveJWTToken(post.getToken(),post.getRefreshToken());
+                                Log.i("REFRESH",post.getRefreshToken());
+                            } else {
+                                //err
+                            }
 
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<Tokens> call, @NonNull Throwable t) {
+
+                            //textView.append("Error occurred while getting request!");
+                            t.printStackTrace();
+                        }
+                    });
 //            BiometricPrompt.PromptInfo promptI = new BiometricPrompt.PromptInfo.Builder()
 //                    .setTitle("Підтверження входу в додаток")
 //                    .setSubtitle("Підтвердіть ваші біометричні дані")
@@ -74,30 +96,8 @@ public class AuthorizationInterceptor implements Interceptor {
 
 //            NavigationHost navigationHost = (NavigationHost) context.getCurrentActivity();
 //            navigationHost.navigateTo(new LoginFragment(), false);
-            NetworkService.getInstance()
-                    .getJSONApi()
-                    .refresh(new Refresh(a.getToken().getToken(),a.getToken().getRefreshToken()))
-                    .enqueue(new Callback<Tokens>() {
-                        @Override
-                        public void onResponse(@NonNull Call<Tokens> call, @NonNull retrofit2.Response<Tokens> response) {
-                            if (response.errorBody() == null && response.isSuccessful()) {
-                                Tokens post = response.body();
-                                act.saveJWTToken(post.getToken(),post.getRefreshToken());
-                                Log.i("REFRESH",post.getRefreshToken());
-                            } else {
-                                //err
-                            }
 
-                        }
-
-                        @Override
-                        public void onFailure(@NonNull Call<Tokens> call, @NonNull Throwable t) {
-
-                            //textView.append("Error occurred while getting request!");
-                            t.printStackTrace();
-                        }
-                    });
-          //  return response;
+            //  return response;
         }
         return response;
     }

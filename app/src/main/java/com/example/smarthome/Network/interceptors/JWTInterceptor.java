@@ -18,7 +18,7 @@ public class JWTInterceptor implements Interceptor {
 
         HomeApplication context = (HomeApplication)HomeApplication.getAppContext();
         JwtServiceHolder jwtService = (JwtServiceHolder)context.getCurrentActivity();
-        String token = jwtService.getToken();
+        String token = jwtService.getToken().getToken();
         if(token != null && !token.isEmpty())
         {
             Request newRequest = originalRequest.newBuilder()
