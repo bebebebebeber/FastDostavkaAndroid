@@ -24,6 +24,7 @@ import com.example.smarthome.Network.models.Profile;
 import com.example.smarthome.Network.utils.CommonUtils;
 import com.example.smarthome.R;
 import com.example.smarthome.constants.Urls;
+import com.google.android.material.textfield.TextInputEditText;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,12 +34,15 @@ public class ProfileFragment extends Fragment {
 
     private ImageRequester imageRequester;
     private NetworkImageView editImage;
+    private TextInputEditText email;
+    private TextInputEditText firstName;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_profile, container, false);
-
+        email =view.findViewById(R.id.email);
+        firstName =view.findViewById(R.id.firstName);
         CommonUtils.showLoading(getContext());
         AuthorizedService.getInstance()
                 .getJSONApi()
@@ -52,6 +56,8 @@ public class ProfileFragment extends Fragment {
                             editImage =view.findViewById(R.id.photo);
                             NetworkImageView nv = (NetworkImageView) view.findViewById(R.id.photo);
                             imageRequester.setImageFromUrl(editImage, Urls.BASE_URL+"/UserImages/"+p.getImage());
+                            email.setText(p.getEmail());
+                            firstName.setText(p.getFirstName());
                             CommonUtils.hideLoading();
 
                         }

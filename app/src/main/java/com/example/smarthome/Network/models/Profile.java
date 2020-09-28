@@ -4,6 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Profile {
+    @SerializedName("email")
+    @Expose
+    private String email;
     @SerializedName("firstName")
     @Expose
     private String firstName;
@@ -19,6 +22,15 @@ public class Profile {
     @SerializedName("city")
     @Expose
     private String city ;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @SerializedName("image")
     @Expose
     private String image ;
