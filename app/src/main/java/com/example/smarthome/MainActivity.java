@@ -15,6 +15,8 @@ import android.content.SharedPreferences;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +28,8 @@ import com.example.smarthome.Network.ImageRequester;
 import com.example.smarthome.Network.Login;
 import com.example.smarthome.Network.NetworkService;
 import com.example.smarthome.Network.Tokens;
+import com.example.smarthome.Network.utils.CommonUtils;
+import com.example.smarthome.application.HomeApplication;
 import com.example.smarthome.constants.Urls;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -71,6 +75,42 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(getToken().getRefreshToken()!=""&&getToken().getRefreshToken()!=null){
+            Button b = findViewById(R.id.biometric);
+            b.setVisibility(View.VISIBLE);
+            BiometricPrompt.PromptInfo promptI = new BiometricPrompt.PromptInfo.Builder()
+                    .setTitle("Підтверження входу в додаток")
+                    .setSubtitle("Підтвердіть ваші біометричні дані")
+                    .setDeviceCredentialAllowed(true)
+                    // Can't call setNegativeButtonText() and
+                    // setAllowedAuthenticators(...|DEVICE_CREDENTIAL) at the same time.
+                    // .setNegativeButtonText("Use account password")
+                    .build();
+            Executor executor = ContextCompat.getMainExecutor(this);
+            BiometricPrompt bp = new BiometricPrompt(this, executor, new BiometricPrompt.AuthenticationCallback() {
+                @Override
+                public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+//                    Toast.makeText(HomeApplication.getAppContext(),
+//                            "Authentication error", Toast.LENGTH_SHORT)
+//                            .show();
+                }
+
+                @Override
+                public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                    Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onAuthenticationFailed() {
+//                    Toast.makeText(HomeApplication.getAppContext(), "Authentication failed",
+//                            Toast.LENGTH_SHORT)
+//                            .show();
+                }
+            });
+            bp.authenticate(promptI);
+        }
         loginButton = (Button) findViewById(R.id.button);
         //imageRequester = ImageRequester.getInstance();
         //editImage =findViewById(R.id.photo);
@@ -99,8 +139,43 @@ public class MainActivity extends BaseActivity {
 
 
     }
+    public void biometricClick(View view) {
+        if(getToken().getRefreshToken()!=""&&getToken().getRefreshToken()!=null){
+            BiometricPrompt.PromptInfo promptI = new BiometricPrompt.PromptInfo.Builder()
+                    .setTitle("Підтверження входу в додаток")
+                    .setSubtitle("Підтвердіть ваші біометричні дані")
+                    .setDeviceCredentialAllowed(true)
+                    // Can't call setNegativeButtonText() and
+                    // setAllowedAuthenticators(...|DEVICE_CREDENTIAL) at the same time.
+                    // .setNegativeButtonText("Use account password")
+                    .build();
+            Executor executor = ContextCompat.getMainExecutor(this);
+            BiometricPrompt bp = new BiometricPrompt(this, executor, new BiometricPrompt.AuthenticationCallback() {
+                @Override
+                public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+//                    Toast.makeText(HomeApplication.getAppContext(),
+//                            "Authentication error", Toast.LENGTH_SHORT)
+//                            .show();
+                }
 
+                @Override
+                public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                    Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onAuthenticationFailed() {
+//                    Toast.makeText(HomeApplication.getAppContext(), "Authentication failed",
+//                            Toast.LENGTH_SHORT)
+//                            .show();
+                }
+            });
+            bp.authenticate(promptI);
+        }
+    }
     public void click(View view) {
+        CommonUtils.showLoading(this);
         final TextInputEditText password = findViewById(R.id.password);
         final TextInputEditText email = findViewById(R.id.email);
         final TextInputLayout passwordLayout = findViewById(R.id.passwordLayout);
@@ -122,20 +197,21 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onResponse(@NonNull Call<Tokens> call, @NonNull Response<Tokens> response) {
 
-                        //textView.append(post.getId() + "\n");
-                        //textView.append(post.getUserId() + "\n");
-                        //textView.append(post.getTitle() + "\n");
-                        //textView.append(post.getBody() + "\n");
+
                         if (response.errorBody() == null && response.isSuccessful()) {
                             passwordLayout.setError("");
                             //loginButton.setError("");
                             Tokens post = response.body();
-                            Toast toast = Toast.makeText(getApplicationContext(), "All done! your ref token :" + post.getRefreshToken(), Toast.LENGTH_LONG);
-                            toast.show();
-                            saveJWTToken(post.getToken());
+                           // Toast toast = Toast.makeText(getApplicationContext(), "All done! your ref token :" + post.getRefreshToken(), Toast.LENGTH_LONG);
+                            //toast.show();
+                            saveJWTToken(post.getToken(),post.getRefreshToken());
+                            CommonUtils.hideLoading();
+                            Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                            startActivity(intent);
                         } else {
                             //emailLayout.setError("");
                             //password.setError("Login or password was wrong");
+                            CommonUtils.hideLoading();
                             passwordLayout.setError("Login or password was wrong");
                             loginButton.setError("Login or password was wrong");
                         }
@@ -145,6 +221,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onFailure(@NonNull Call<Tokens> call, @NonNull Throwable t) {
 
+                        CommonUtils.hideLoading();
                         //textView.append("Error occurred while getting request!");
                         t.printStackTrace();
                     }
