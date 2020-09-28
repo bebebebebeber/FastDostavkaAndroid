@@ -1,6 +1,9 @@
 package com.example.smarthome.Network;
 
+import com.example.smarthome.Network.models.Categories;
 import com.example.smarthome.Network.models.Profile;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -14,6 +17,8 @@ public interface FastDostavka {
     public Call<Tokens> refresh(@Body Refresh m);
     @GET("/api/account/profile")
     public Call<Profile> profile();
+    @GET("/api/category/categories")
+    public Call<List<Categories>> categories();
 //    @GET("/posts")
 //    public Call<List<Post>> getAllPosts();
 }
