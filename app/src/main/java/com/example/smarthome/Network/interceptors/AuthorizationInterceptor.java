@@ -49,6 +49,7 @@ public class AuthorizationInterceptor implements Interceptor {
                                 act.saveJWTToken(post.getToken(),post.getRefreshToken());
                                 Log.i("REFRESH",post.getRefreshToken());
                             } else {
+                                act.removeToken();
                                 //err
                             }
 
@@ -56,7 +57,7 @@ public class AuthorizationInterceptor implements Interceptor {
 
                         @Override
                         public void onFailure(@NonNull Call<Tokens> call, @NonNull Throwable t) {
-
+                            act.removeToken();
                             //textView.append("Error occurred while getting request!");
                             t.printStackTrace();
                         }
