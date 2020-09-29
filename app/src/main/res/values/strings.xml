@@ -13,5 +13,7 @@
     <string name="title_dashboard">Замовлення</string>
     <string name="title_notifications">Профіль</string>
 
+    <string name="product_title">Назва</string>
+    <string name="product_description">Опис</string>
 
 </resources>

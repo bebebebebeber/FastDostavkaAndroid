@@ -2,6 +2,7 @@ package com.example.smarthome.Network;
 
 import com.example.smarthome.Network.models.Categories;
 import com.example.smarthome.Network.models.Profile;
+import com.example.smarthome.Network.models.Store;
 
 import java.util.List;
 
@@ -19,6 +20,9 @@ public interface FastDostavka {
     public Call<Profile> profile();
     @GET("/api/category/categories")
     public Call<List<Categories>> categories();
+    @POST("/api/store/stores")
+    public Call<List<Store>> stores();
+
 //    @GET("/posts")
 //    public Call<List<Post>> getAllPosts();
 }
