@@ -58,7 +58,7 @@ public class StoresFragment extends Fragment {
                                     android.R.layout.simple_spinner_item,items);
                             AutoCompleteTextView editTextFilledExposedDropdown =
                                     view.findViewById(R.id.filled_exposed_dropdown);
-                            editTextFilledExposedDropdown.setText("Shop",false);
+                            editTextFilledExposedDropdown.setText("Магазини",false);
                             editTextFilledExposedDropdown.setAdapter(adapter);
                             editTextFilledExposedDropdown.setEnabled(false);
                             //CommonUtils.hideLoading();
