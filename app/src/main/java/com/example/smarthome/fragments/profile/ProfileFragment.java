@@ -61,6 +61,9 @@ public class ProfileFragment extends Fragment {
                             CommonUtils.hideLoading();
 
                         }
+                        else{
+                            CommonUtils.hideLoading();
+                        }
                     }
 
                     @Override
