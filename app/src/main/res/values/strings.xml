@@ -15,5 +15,6 @@
 
     <string name="product_title">Назва</string>
     <string name="product_description">Опис</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

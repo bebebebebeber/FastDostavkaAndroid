@@ -41,6 +41,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.microsoft.signalr.HubConnection;
+import com.microsoft.signalr.HubConnectionBuilder;
 
 import java.util.concurrent.Executor;
 
@@ -75,7 +77,6 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         if(getToken().getRefreshToken()!=""&&getToken().getRefreshToken()!=null){
             Button b = findViewById(R.id.biometric);
             b.setVisibility(View.VISIBLE);
