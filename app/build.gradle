@@ -35,7 +35,7 @@ dependencies {
     api 'com.google.android.material:material:1.1.0-alpha06'
     implementation "com.android.volley:volley:$volley_version"
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
-
+    implementation 'com.microsoft.signalr:signalr:1.0.0'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
