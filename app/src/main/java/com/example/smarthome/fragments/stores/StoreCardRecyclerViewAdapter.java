@@ -47,6 +47,7 @@ public class StoreCardRecyclerViewAdapter extends RecyclerView.Adapter<StoreCard
             StoreEntry product = productList.get(position);
             holder.productTitle.setText(product.name);
             holder.productDescription.setText(product.description);
+            holder.id =  Integer.toString(product.id);
 
             int i = (int) (new Date().getTime()/1000);
             if(product.image!=null){
