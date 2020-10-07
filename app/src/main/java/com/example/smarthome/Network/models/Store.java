@@ -19,6 +19,28 @@ public class Store {
     @SerializedName("adress")
     @Expose
     private String adress;
+    @SerializedName("coordinate1")
+    @Expose
+    private double coordinate1;
+    @SerializedName("coordinate2")
+    @Expose
+    private double coordinate2;
+
+    public double getCoordinate1() {
+        return coordinate1;
+    }
+
+    public void setCoordinate1(double coordinate1) {
+        this.coordinate1 = coordinate1;
+    }
+
+    public double getCoordinate2() {
+        return coordinate2;
+    }
+
+    public void setCoordinate2(double coordinate2) {
+        this.coordinate2 = coordinate2;
+    }
 
     public int getId() {
         return id;

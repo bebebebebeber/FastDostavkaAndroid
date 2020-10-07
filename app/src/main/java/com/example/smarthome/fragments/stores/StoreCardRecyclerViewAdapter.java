@@ -48,7 +48,8 @@ public class StoreCardRecyclerViewAdapter extends RecyclerView.Adapter<StoreCard
             holder.productTitle.setText(product.name);
             holder.productDescription.setText(product.description);
             holder.id =  Integer.toString(product.id);
-
+            holder.c1 = product.getCoordinate1();
+            holder.c2 = product.getCoordinate2();
             int i = (int) (new Date().getTime()/1000);
             if(product.image!=null){
                 imageRequester.setImageFromUrl(holder.productImage, Urls.BASE_URL+"/UserImages/"+product.image+"?data="+i);

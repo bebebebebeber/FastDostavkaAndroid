@@ -113,7 +113,7 @@ public class StoresFragment extends Fragment {
                             List<Store> list = response.body();
                             storeEntryList.clear();
                             for (Store item : list) {
-                                StoreEntry tmp = new StoreEntry(item.getId(), item.getName(), item.getImage(), item.getAdress(), item.getDescription());
+                                StoreEntry tmp = new StoreEntry(item.getId(), item.getName(), item.getImage(), item.getAdress(), item.getDescription(),item.getCoordinate1(),item.getCoordinate2());
                                 storeEntryList.add(tmp);
                             }
                             storeAdapter.notifyDataSetChanged();

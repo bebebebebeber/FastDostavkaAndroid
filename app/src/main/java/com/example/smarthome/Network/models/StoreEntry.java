@@ -6,6 +6,8 @@ import android.util.Log;
 
 import com.example.smarthome.R;
 import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
@@ -29,13 +31,40 @@ public class StoreEntry {
     public String image;
     public String adress;
     public String description;
-
+    private double coordinate1;
+    private double coordinate2;
     public StoreEntry(int id, String name, String image, String adress, String description) {
         this.id = id;
         this.name = name;
         this.image = image;
         this.adress = adress;
         this.description = description;
+    }
+
+    public StoreEntry(int id, String name, String image, String adress, String description, double coordinate1, double coordinate2) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.adress = adress;
+        this.description = description;
+        this.coordinate1 = coordinate1;
+        this.coordinate2 = coordinate2;
+    }
+
+    public double getCoordinate1() {
+        return coordinate1;
+    }
+
+    public void setCoordinate1(double coordinate1) {
+        this.coordinate1 = coordinate1;
+    }
+
+    public double getCoordinate2() {
+        return coordinate2;
+    }
+
+    public void setCoordinate2(double coordinate2) {
+        this.coordinate2 = coordinate2;
     }
 
     public static String getTAG() {
