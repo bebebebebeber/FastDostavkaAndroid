@@ -17,6 +17,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.example.smarthome.Network.AuthorizedService;
 import com.example.smarthome.Network.ImageRequester;
 import com.example.smarthome.Network.models.Categories;
+import com.example.smarthome.Network.models.GetStores;
 import com.example.smarthome.Network.models.Profile;
 import com.example.smarthome.Network.models.Store;
 import com.example.smarthome.Network.models.StoreEntry;
@@ -105,7 +106,7 @@ public class StoresFragment extends Fragment {
 
         AuthorizedService.getInstance()
                 .getJSONApi()
-                .stores()
+                .stores(new GetStores())
                 .enqueue(new Callback<List<Store>>() {
                     @Override
                     public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
@@ -113,7 +114,7 @@ public class StoresFragment extends Fragment {
                             List<Store> list = response.body();
                             storeEntryList.clear();
                             for (Store item : list) {
-                                StoreEntry tmp = new StoreEntry(item.getId(), item.getName(), item.getImage(), item.getAdress(), item.getDescription());
+                                StoreEntry tmp = new StoreEntry(item.getId(), item.getName(), item.getImage(), item.getAdress(), item.getDescription(),item.getCoordinate1(),item.getCoordinate2());
                                 storeEntryList.add(tmp);
                             }
                             storeAdapter.notifyDataSetChanged();

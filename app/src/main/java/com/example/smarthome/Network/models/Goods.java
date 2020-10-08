@@ -3,7 +3,7 @@ package com.example.smarthome.Network.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Store {
+public class Goods {
     @SerializedName("id")
     @Expose
     private int id;
@@ -16,30 +16,16 @@ public class Store {
     @SerializedName("image")
     @Expose
     private String image;
-    @SerializedName("adress")
+    @SerializedName("price")
     @Expose
-    private String adress;
-    @SerializedName("coordinate1")
-    @Expose
-    private double coordinate1;
-    @SerializedName("coordinate2")
-    @Expose
-    private double coordinate2;
+    private double price;
 
-    public double getCoordinate1() {
-        return coordinate1;
+    public double getPrice() {
+        return price;
     }
 
-    public void setCoordinate1(double coordinate1) {
-        this.coordinate1 = coordinate1;
-    }
-
-    public double getCoordinate2() {
-        return coordinate2;
-    }
-
-    public void setCoordinate2(double coordinate2) {
-        this.coordinate2 = coordinate2;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public int getId() {
@@ -74,11 +60,5 @@ public class Store {
         this.image = image;
     }
 
-    public String getAdress() {
-        return adress;
-    }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
 }
