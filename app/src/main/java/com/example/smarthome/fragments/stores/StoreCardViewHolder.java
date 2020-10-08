@@ -19,7 +19,7 @@ public class StoreCardViewHolder extends RecyclerView.ViewHolder {
     public TextView productTitle;
     public TextView productDescription;
     public MaterialButton b;
-    public String id;
+    public int id;
     public double c1;
     public double c2;
     public StoreCardViewHolder(@NonNull View itemView) {
