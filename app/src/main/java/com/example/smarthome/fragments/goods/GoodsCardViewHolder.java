@@ -36,6 +36,7 @@ public class GoodsCardViewHolder extends RecyclerView.ViewHolder {
                                  @Override
                                  public void onClick(View v) {
                                      Intent intent = new Intent(view.getContext(), Order.class);
+                                     intent.putExtra("id",id);
                                      view.getContext().startActivity(intent);
                                  }
                              }
