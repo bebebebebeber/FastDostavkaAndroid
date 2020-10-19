@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.smarthome.GoodsActivity;
+import com.example.smarthome.Order;
 import com.example.smarthome.R;
 import com.google.android.material.button.MaterialButton;
 
@@ -31,13 +32,15 @@ public class GoodsCardViewHolder extends RecyclerView.ViewHolder {
         productPrice = itemView.findViewById(R.id.product_price);
 
         b = itemView.findViewById(R.id.product_button);
-//        b.setOnClickListener(new View.OnClickListener() {
-//                                 @Override
-//                                 public void onClick(View v) {
-//
-//                                 }
-//                             }
-//        );
+        b.setOnClickListener(new View.OnClickListener() {
+                                 @Override
+                                 public void onClick(View v) {
+                                     Intent intent = new Intent(view.getContext(), Order.class);
+                                     intent.putExtra("id",id);
+                                     view.getContext().startActivity(intent);
+                                 }
+                             }
+        );
     }
 
     public View getView() {

@@ -4,6 +4,8 @@ import com.example.smarthome.Network.models.Categories;
 import com.example.smarthome.Network.models.GetGoods;
 import com.example.smarthome.Network.models.GetStores;
 import com.example.smarthome.Network.models.Goods;
+import com.example.smarthome.Network.models.LastOrder;
+import com.example.smarthome.Network.models.Order;
 import com.example.smarthome.Network.models.Profile;
 import com.example.smarthome.Network.models.Store;
 
@@ -27,6 +29,10 @@ public interface FastDostavka {
     public Call<List<Store>> stores(@Body GetStores m);
     @POST("/api/store/goods")
     public Call<List<Goods>> goods(@Body GetGoods m);
+    @POST("/api/Order/order")
+    public Call<Void> order(@Body Order m);
+    @GET("/api/Order/last-order")
+    public Call<LastOrder> lastOrder();
 //    @GET("/posts")
 //    public Call<List<Post>> getAllPosts();
 }
