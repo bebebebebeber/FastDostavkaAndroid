@@ -26,6 +26,16 @@ public class LastOrder {
     @Expose
     private String  goodsImage;
 
+    public LastOrder(String adress, int house, int flat, int id, String status, String goodsName, String goodsImage) {
+        this.adress = adress;
+        this.house = house;
+        this.flat = flat;
+        this.id = id;
+        this.status = status;
+        this.goodsName = goodsName;
+        this.goodsImage = goodsImage;
+    }
+
     public String getGoodsName() {
         return goodsName;
     }

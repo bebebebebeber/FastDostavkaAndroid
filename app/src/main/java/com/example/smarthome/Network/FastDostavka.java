@@ -33,6 +33,9 @@ public interface FastDostavka {
     public Call<Void> order(@Body Order m);
     @GET("/api/Order/last-order")
     public Call<LastOrder> lastOrder();
+    @GET("/api/Order/orders")
+    public Call<List<LastOrder>> listOrders();
+
 //    @GET("/posts")
 //    public Call<List<Post>> getAllPosts();
 }
