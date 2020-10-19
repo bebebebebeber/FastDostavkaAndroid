@@ -69,11 +69,13 @@ public class OrderStatus extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.order_status);
         getLastOrder(views,appWidgetManager,appWidgetId);
 
-        HubConnection hubConnection = HubConnectionBuilder.create(Urls.BASE_URL+"hubs/chat").withAccessTokenProvider(Single.defer(() -> {
+        HubConnection hubConnection = HubConnectionBuilder.create(Urls.BASE_URL+"/hubs/chat").withAccessTokenProvider(Single.defer(() -> {
             return Single.just(token);
         })).build();
+
         hubConnection.on("orderStatusChanged", (chatId) -> {
             System.out.println("New Message: " + chatId);
+            getLastOrder(views,appWidgetManager,appWidgetId);
         }, String.class);
 
         hubConnection.start();
