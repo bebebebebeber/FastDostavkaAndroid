@@ -16,5 +16,7 @@
     <string name="product_title">Назва</string>
     <string name="product_description">Опис</string>
     <string name="title_activity_maps">Map</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>
