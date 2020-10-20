@@ -1,6 +1,7 @@
 package com.example.smarthome.Network;
 
 import com.example.smarthome.Network.models.Categories;
+import com.example.smarthome.Network.models.DetailsOrder;
 import com.example.smarthome.Network.models.GetGoods;
 import com.example.smarthome.Network.models.GetStores;
 import com.example.smarthome.Network.models.Goods;
@@ -15,6 +16,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface FastDostavka {
     @POST("/api/auth/login")
@@ -35,6 +37,9 @@ public interface FastDostavka {
     public Call<LastOrder> lastOrder();
     @GET("/api/Order/orders")
     public Call<List<LastOrder>> listOrders();
+
+    @GET("/api/Order/order/{id}")
+    public Call<DetailsOrder> DetailsOrder(@Path("id") int id);
 
 //    @GET("/posts")
 //    public Call<List<Post>> getAllPosts();

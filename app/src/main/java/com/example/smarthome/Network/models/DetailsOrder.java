@@ -5,40 +5,48 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class LastOrder implements Serializable {
-    @SerializedName("adress")
-    @Expose
-    private String adress;
-    @SerializedName("house")
-    @Expose
-    private int house;
-    @SerializedName("flat")
-    @Expose
-    private int flat;
+public class DetailsOrder implements Serializable {
     @SerializedName("id")
     @Expose
     private int id;
+    @SerializedName("adress")
+    @Expose
+    private String adress;
+    @SerializedName("flat")
+    @Expose
+    private int flat;
     @SerializedName("status")
     @Expose
     private String status;
+    @SerializedName("house")
+    @Expose
+    private int house;
     @SerializedName("goodsName")
     @Expose
     private String  goodsName;
     @SerializedName("goodsImage")
     @Expose
     private String  goodsImage;
+    @SerializedName("orderDate")
+    @Expose
+    private String  orderDate;
+    @SerializedName("statusId")
+    @Expose
+    private String  statusId;
 
-    public LastOrder() {
+    public DetailsOrder() {
     }
 
-    public LastOrder(String adress, int house, int flat, int id, String status, String goodsName, String goodsImage) {
-        this.adress = adress;
-        this.house = house;
-        this.flat = flat;
+    public DetailsOrder(int id, String adress, int flat, String status, int house, String goodsName, String goodsImage, String orderDate, String statusId) {
         this.id = id;
+        this.adress = adress;
+        this.flat = flat;
         this.status = status;
+        this.house = house;
         this.goodsName = goodsName;
         this.goodsImage = goodsImage;
+        this.orderDate = orderDate;
+        this.statusId = statusId;
     }
 
     public String getGoodsName() {
@@ -97,5 +105,19 @@ public class LastOrder implements Serializable {
         this.status = status;
     }
 
+    public String getOrderDate() {
+        return orderDate;
+    }
 
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(String statusId) {
+        this.statusId = statusId;
+    }
 }
