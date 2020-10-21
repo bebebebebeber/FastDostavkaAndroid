@@ -49,6 +49,7 @@ public class GoodsCardRecyclerViewAdapter extends RecyclerView.Adapter<GoodsCard
             holder.productTitle.setText(product.name);
             holder.productDescription.setText(product.description);
             holder.id =  product.id;
+            holder.image = product.image;
             holder.productPrice.setText(Double.toString(product.price));
             int i = (int) (new Date().getTime()/1000);
             if(product.image!=null){
