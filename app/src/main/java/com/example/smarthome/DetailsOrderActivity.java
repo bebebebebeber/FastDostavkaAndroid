@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.smarthome.Network.AuthorizedService;
@@ -50,6 +51,17 @@ public class DetailsOrderActivity extends AppCompatActivity {
                                 url = Urls.BASE_URL + "/UserImages/default.png?data=" + i;
                             }
                             imageRequester.setImageFromUrl(photo, url);
+                            TextView productName = findViewById(R.id.productName);
+                            productName.setText(order.getGoodsName());
+                            TextView adress = findViewById(R.id.adress);
+                            adress.setText(order.getAdress());
+                            TextView home = findViewById(R.id.houseHome);
+                            home.setText(Integer.toString(order.getHouse()));
+                            TextView flatApartment = findViewById(R.id.flatApartment);
+                            flatApartment.setText(Integer.toString(order.getFlat()));
+                            TextView status = findViewById(R.id.status);
+                            status.setText(order.getStatus());
+
                             CommonUtils.hideLoading();
                         }
                         else {
