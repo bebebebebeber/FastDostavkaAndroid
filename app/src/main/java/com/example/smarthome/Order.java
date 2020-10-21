@@ -14,10 +14,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.example.smarthome.Network.AuthorizedService;
+import com.example.smarthome.Network.ImageRequester;
 import com.example.smarthome.Network.models.Profile;
+import com.example.smarthome.constants.Urls;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationServices;
@@ -40,6 +44,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -53,13 +58,35 @@ public class Order extends FragmentActivity {
     private int house;
     private int flat;
     private int id;
+    private String name;
+    private String price;
+    private String image;
+    private ImageRequester imageRequester;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         id = getIntent().getIntExtra("id",0);
+        name = getIntent().getStringExtra("name");
+        price = getIntent().getStringExtra("price");
+        image = getIntent().getStringExtra("image");
 
+        TextView text = findViewById(R.id.product_nazva);
+        text.setText(name);
+
+        TextView text2 = findViewById(R.id.product_tsina);
+        text2.setText(price);
+
+        NetworkImageView img = findViewById(R.id.image_duzhe_garno);
+        imageRequester = ImageRequester.getInstance();
+        int i = (int) (new Date().getTime()/1000);
+        if(image!=null){
+            imageRequester.setImageFromUrl(img, Urls.BASE_URL+"/UserImages/"+image+"?data="+i);
+        }
+        else {
+            imageRequester.setImageFromUrl(img, Urls.BASE_URL+"/UserImages/default.png?data="+i);
+        }
 //        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 //                .findFragmentById(R.id.map);
 //        mapFragment.getMapAsync(this);

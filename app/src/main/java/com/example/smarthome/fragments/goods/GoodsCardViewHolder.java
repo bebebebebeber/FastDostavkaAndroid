@@ -22,6 +22,7 @@ public class GoodsCardViewHolder extends RecyclerView.ViewHolder {
     public TextView productPrice;
     public MaterialButton b;
     public int id;
+    public String image;
     public double price;
     public GoodsCardViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -37,6 +38,9 @@ public class GoodsCardViewHolder extends RecyclerView.ViewHolder {
                                  public void onClick(View v) {
                                      Intent intent = new Intent(view.getContext(), Order.class);
                                      intent.putExtra("id",id);
+                                     intent.putExtra("name", productTitle.getText());
+                                     intent.putExtra("price", productPrice.getText());
+                                     intent.putExtra("image", image);
                                      view.getContext().startActivity(intent);
                                  }
                              }
