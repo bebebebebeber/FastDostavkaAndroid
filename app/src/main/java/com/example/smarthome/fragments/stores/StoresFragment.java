@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
@@ -22,6 +23,7 @@ import com.example.smarthome.Network.models.Profile;
 import com.example.smarthome.Network.models.Store;
 import com.example.smarthome.Network.models.StoreEntry;
 import com.example.smarthome.Network.utils.CommonUtils;
+import com.example.smarthome.Network.utils.GetClassCode;
 import com.example.smarthome.R;
 import com.example.smarthome.constants.Urls;
 
@@ -52,16 +54,35 @@ public class StoresFragment extends Fragment {
                     public void onResponse(Call<List<Categories>> call, Response<List<Categories>> response) {
                         if (response.errorBody() == null && response.isSuccessful()) {
                             List<Categories> categories = response.body();
+                            GetClassCode.init(categories);
                             List<String> names
                                     =categories.stream().map(x->x.getName()).collect(Collectors.toList());
-                            String[] items = names.toArray(new String[0]);
+                            int dataArray =0;
+//                            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+//                                    view.getContext(), dataArray, android.R.layout.simple_spinner_item);
                             ArrayAdapter<String>adapter = new ArrayAdapter<String>(view.getContext(),
-                                    android.R.layout.simple_spinner_item,items);
-                            AutoCompleteTextView editTextFilledExposedDropdown =
-                                    view.findViewById(R.id.filled_exposed_dropdown);
-                            editTextFilledExposedDropdown.setText("Магазини",false);
-                            editTextFilledExposedDropdown.setAdapter(adapter);
-                            editTextFilledExposedDropdown.setEnabled(false);
+                                    android.R.layout.simple_spinner_item,names);
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                            Spinner s = view.findViewById(R.id.spinner);
+//                            AutoCompleteTextView editTextFilledExposedDropdown =
+//                                    view.findViewById(R.id.filled_exposed_dropdown);
+                            s.setAdapter(adapter);
+                            s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    String Text = s.getSelectedItem().toString();
+                                    String value = GetClassCode.getCode(Text);
+                                    loadStoresList(Integer.parseInt(value));
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                }
+                            });
+                            //editTextFilledExposedDropdown.setText("Магазини",false);
+                            //editTextFilledExposedDropdown.setAdapter(adapter);
+                            //editTextFilledExposedDropdown.setEnabled(false);
                             //CommonUtils.hideLoading();
                         }
                         else {
@@ -80,7 +101,7 @@ public class StoresFragment extends Fragment {
 
         setRecyclerView();
 
-        loadStoresList();
+        loadStoresList(0);
 
         return view;
     }
@@ -101,12 +122,12 @@ public class StoresFragment extends Fragment {
 //        int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing_small);
         //recyclerView.addItemDecoration(new ProductGridItemDecoration(largePadding, smallPadding));
     }
-    private void loadStoresList() {
+    private void loadStoresList(int id) {
        // CommonUtils.showLoading(getContext());
 
         AuthorizedService.getInstance()
                 .getJSONApi()
-                .stores(new GetStores())
+                .stores(new GetStores(id))
                 .enqueue(new Callback<List<Store>>() {
                     @Override
                     public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {

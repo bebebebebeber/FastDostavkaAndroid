@@ -8,6 +8,10 @@ public class GetStores {
     @Expose
     private int category;
 
+    public GetStores(int category) {
+        this.category = category;
+    }
+
     public int getId() {
         return category;
     }
